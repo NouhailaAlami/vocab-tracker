@@ -31,7 +31,7 @@ The LLM decides *what* to do; the application decides *whose* data it touches.
 
 **Reviews are stored as individual rows, not counters.** A `times_wrong` column would be simpler but discards history. Keeping each review with its timestamp is what makes "which words have I been failing over the past month" answerable, and it's what the dashboard and the agent both read.
 
-## Running it
+## Running the Project
 
 Requires Docker and [uv](https://docs.astral.sh/uv/).
 
