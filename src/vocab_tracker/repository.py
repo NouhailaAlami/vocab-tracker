@@ -64,30 +64,27 @@ def record_review(word_id: int, correct: bool) -> None:
             "INSERT INTO reviews (word_id, correct) VALUES (%s, %s)",
             (word_id, correct),
         )
-
-def get_word_stats(user_id: int, limit: int | None = None) -> list[dict]:
-    """Each word with its review history, weakest first."""
-    query = """
-        SELECT w.id,
-               w.word,
-               w.definition,
-               COUNT(r.id) AS times_reviewed,
-               COUNT(r.id) FILTER (WHERE r.correct) AS times_correct,
-               ROUND(
-                   COUNT(r.id) FILTER (WHERE r.correct)::numeric
-                   / NULLIF(COUNT(r.id), 0), 2
-               )::float AS accuracy,
-               MAX(r.reviewed_at) AS last_reviewed
-        FROM words w
-        LEFT JOIN reviews r ON r.word_id = w.id
-        WHERE w.user_id = %s
-        GROUP BY w.id, w.word, w.definition
-        ORDER BY accuracy NULLS FIRST, times_reviewed DESC
-    """
-    params: list = [user_id]
-    if limit is not None:
-        query += " LIMIT %s"
-        params.append(limit)
-
+def get_quiz_word(user_id: int) -> dict | None:
+    """Pick a word to review: sample randomly from the five weakest."""
     with get_connection() as conn:
-        return conn.execute(query, params).fetchall()
+        return conn.execute(
+            """
+            SELECT * FROM (
+                SELECT w.id, w.word, w.definition, w.translation, w.example,
+                       COALESCE(
+                           COUNT(r.id) FILTER (WHERE r.correct)::float
+                           / NULLIF(COUNT(r.id), 0), -1
+                       ) AS accuracy,
+                       MAX(r.reviewed_at) AS last_reviewed
+                FROM words w
+                LEFT JOIN reviews r ON r.word_id = w.id
+                WHERE w.user_id = %s
+                GROUP BY w.id
+                ORDER BY accuracy, last_reviewed NULLS FIRST
+                LIMIT 5
+            ) weakest
+            ORDER BY random()
+            LIMIT 1
+            """,
+            (user_id,),
+        ).fetchone()

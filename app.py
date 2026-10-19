@@ -128,7 +128,41 @@ def dashboard_page(user_id: int):
     else:
         st.bar_chart(weak.set_index("word")["accuracy"], height=260)
 
+def quiz_page(user_id: int):
+    st.subheader("Quiz")
 
+    if "quiz_word" not in st.session_state:
+        st.session_state.quiz_word = repo.get_quiz_word(user_id)
+        st.session_state.quiz_result = None
+
+    card = st.session_state.quiz_word
+    if not card:
+        st.info("Add some words first.")
+        return
+
+    st.markdown(f"### {card['definition'] or '(no definition saved)'}")
+    if card["translation"]:
+        st.caption(f"🇫🇷 {card['translation']}")
+
+    if st.session_state.quiz_result is None:
+        with st.form("quiz_form", clear_on_submit=True):
+            answer = st.text_input("Which word is this?")
+            if st.form_submit_button("Check"):
+                correct = answer.strip().lower() == card["word"].strip().lower()
+                repo.record_review(card["id"], correct)
+                st.session_state.quiz_result = correct
+                st.rerun()
+    else:
+        if st.session_state.quiz_result:
+            st.success(f"Correct — **{card['word']}**")
+        else:
+            st.error(f"The word was **{card['word']}**")
+        if card["example"]:
+            st.caption(card["example"])
+        if st.button("Next word", type="primary"):
+            st.session_state.quiz_word = repo.get_quiz_word(user_id)
+            st.session_state.quiz_result = None
+            st.rerun()
 def main_app():
     user_id = st.session_state.user_id
 
@@ -139,7 +173,7 @@ def main_app():
             st.rerun()
 
     st.title("Vocab Tracker")
-    tab_add, tab_words, tab_dash = st.tabs(["Add", "My words", "Dashboard"])
+    tab_add, tab_words,tab_quiz, tab_dash = st.tabs(["Add", "My words","Quiz", "Dashboard"])
 
     with tab_add:
         add_word_page(user_id)
@@ -147,6 +181,8 @@ def main_app():
         my_words_page(user_id)
     with tab_dash:
         dashboard_page(user_id)
+    with tab_quiz:
+        quiz_page(user_id)
 if st.session_state.user_id is None:
     login_page()
 else:
