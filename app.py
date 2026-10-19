@@ -4,6 +4,7 @@ from vocab_tracker import llm
 from vocab_tracker import auth
 import pandas as pd
 from vocab_tracker import repository as repo
+from vocab_tracker.agent import build_agent
 
 st.set_page_config(page_title="Vocab Tracker", page_icon="📚", layout="wide")
 
@@ -163,6 +164,31 @@ def quiz_page(user_id: int):
             st.session_state.quiz_word = repo.get_quiz_word(user_id)
             st.session_state.quiz_result = None
             st.rerun()
+def chat_page(user_id: int):
+    st.subheader("Coach")
+
+    if "chat" not in st.session_state:
+        st.session_state.chat = []
+
+    if st.session_state.chat and st.button("Clear conversation"):
+        st.session_state.chat = []
+        st.rerun()
+
+    for msg in st.session_state.chat:
+        st.chat_message(msg["role"]).write(msg["content"])
+
+    if prompt := st.chat_input("Ask about your words…"):
+        st.session_state.chat.append({"role": "user", "content": prompt})
+        st.chat_message("user").write(prompt)
+
+        with st.chat_message("assistant"):
+            with st.spinner("Thinking…"):
+                agent = build_agent(user_id)
+                result = agent.invoke({"messages": st.session_state.chat})
+                reply = result["messages"][-1].content
+            st.write(reply)
+
+        st.session_state.chat.append({"role": "assistant", "content": reply})
 def main_app():
     user_id = st.session_state.user_id
 
@@ -173,7 +199,7 @@ def main_app():
             st.rerun()
 
     st.title("Vocab Tracker")
-    tab_add, tab_words,tab_quiz, tab_dash = st.tabs(["Add", "My words","Quiz", "Dashboard"])
+    tab_add, tab_words,tab_quiz, tab_dash,tab_chat  = st.tabs(["Add", "My words","Quiz", "Dashboard","Coach"])
 
     with tab_add:
         add_word_page(user_id)
@@ -183,6 +209,8 @@ def main_app():
         dashboard_page(user_id)
     with tab_quiz:
         quiz_page(user_id)
+    with tab_chat:
+        chat_page(user_id)
 if st.session_state.user_id is None:
     login_page()
 else:
