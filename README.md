@@ -50,9 +50,9 @@ uv run streamlit run app.py
 Opens at `localhost:8501`.
 
 ## Project structure
-
+```
 vocab-tracker/
-├── app.py                    # Streamlit entry point
+├── app.py                    # Streamlit entry point — UI and session state
 ├── schema.sql                # table definitions, applied on first container boot
 ├── docker-compose.yml        # PostgreSQL service
 ├── pyproject.toml            # dependencies
@@ -69,7 +69,7 @@ vocab-tracker/
         ├── auth.py           # bcrypt hashing, login
         ├── llm.py            # structured word generation
         └── agent.py          # LangChain agent and its tools
-
+```
 ## Roadmap
 
 - Spaced repetition scheduling (SM-2) so reviews are due rather than random
