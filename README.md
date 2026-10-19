@@ -4,10 +4,10 @@ A vocabulary learning app with an AI coach that can read and write your word lis
 
 ## What it does
 
-- **Add words** — type a word, an LLM generates the definition, French translation and an example sentence. Everything stays editable before saving.
-- **Quiz** — shown a definition, type the word. Answers are recorded, weakest words are asked first.
-- **Dashboard** — word count, review coverage, overall accuracy, and which words you keep getting wrong.
-- **Coach** — a chat agent with tools over your own data. Ask *"which words am I weakest on?"*, *"quiz me"*, or *"add 'serendipity'"* and it queries or writes to the database accordingly.
+- **Add words:** type a word, an LLM generates the definition, French translation and an example sentence. Everything stays editable before saving.
+- **Quiz:** shown a definition, type the word. Answers are recorded, weakest words are asked first.
+- **Dashboard:** word count, review coverage, overall accuracy, and which words you keep getting wrong.
+- **AI Coach:** a chat agent with tools over your own data. Ask *"which words am I weakest on?"*, *"quiz me"*, or *"add 'serendipity'"* and it queries or writes to the database accordingly.
 
 ## Stack
 
