@@ -80,9 +80,14 @@ vocab-tracker/
 ## Screenshots
 
 ### Add a word
+<p align="center">
 <img width="586" height="626" alt="image" src="https://github.com/user-attachments/assets/e497e8dc-3b6a-46d9-9d10-476d1046635d" />
+</p>
+
 The model proposes a definition, translation and example sentence. Everything stays editable before saving.
 ### Coach
+<p align="center">
 <img width="586" height="626" alt="image" src="https://github.com/user-attachments/assets/1535938a-dacd-4dfc-9431-54373cb8b979" />
+</p>
 
 The agent has tools over your own data — it can list your words, find the ones you keep missing, and save new ones.
