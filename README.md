@@ -90,4 +90,4 @@ The model proposes a definition, translation and example sentence. Everything st
 <img width="586" height="626" alt="image" src="https://github.com/user-attachments/assets/1535938a-dacd-4dfc-9431-54373cb8b979" />
 </p>
 
-The agent has tools over your own data — it can list your words, find the ones you keep missing, and save new ones.
+The agent has tools over your own data : it can list your words, find the ones you keep missing, and save new ones.
