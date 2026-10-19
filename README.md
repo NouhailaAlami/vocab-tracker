@@ -52,7 +52,7 @@ Opens at `localhost:8501`.
 ## Project structure
 ```
 vocab-tracker/
-├── app.py                    # Streamlit entry point — UI and session state
+├── app.py                    # Streamlit entry point 
 ├── schema.sql                # table definitions, applied on first container boot
 ├── docker-compose.yml        # PostgreSQL service
 ├── pyproject.toml            # dependencies
