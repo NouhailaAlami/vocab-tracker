@@ -85,7 +85,7 @@ vocab-tracker/
 </p>
 
 The model proposes a definition, translation and example sentence. Everything stays editable before saving.
-### Coach
+### AI Coach
 <p align="center">
 <img width="586" height="626" alt="image" src="https://github.com/user-attachments/assets/1535938a-dacd-4dfc-9431-54373cb8b979" />
 </p>
