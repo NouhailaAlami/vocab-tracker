@@ -80,7 +80,7 @@ vocab-tracker/
 ## Screenshots
 
 ### Add a word
-<img width="595" height="576" alt="image" src="https://github.com/user-attachments/assets/e497e8dc-3b6a-46d9-9d10-476d1046635d" />
+<img width="586" height="626" alt="image" src="https://github.com/user-attachments/assets/e497e8dc-3b6a-46d9-9d10-476d1046635d" />
 The model proposes a definition, translation and example sentence. Everything stays editable before saving.
 ### Coach
 <img width="586" height="626" alt="image" src="https://github.com/user-attachments/assets/1535938a-dacd-4dfc-9431-54373cb8b979" />
